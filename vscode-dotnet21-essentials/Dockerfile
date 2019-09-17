@@ -11,10 +11,21 @@ USER root
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils \
     && apt-get -y upgrade \
-    && apt-get -y install --no-install-recommends zsh sudo \
-    && apt-get -y install --no-install-recommends apt-transport-https ca-certificates curl \
-       gnupg-agent software-properties-common lsb-release gcc apt-utils dialog git iproute2 \
-       procps 2>&1 \
+    && apt-get -y install --no-install-recommends \
+       apt-transport-https \
+       apt-utils \
+       ca-certificates \
+       curl \
+       dialog \
+       gcc \
+       git \
+       gnupg-agent \
+       iproute2 \
+       lsb-release \
+       procps \
+       software-properties-common \
+       zsh \
+       2>&1 \
     # create user and install oh-my-zsh \
     && wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     # Add repositories:
