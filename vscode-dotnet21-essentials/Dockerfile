@@ -23,11 +23,14 @@ RUN apt-get update \
        iproute2 \
        lsb-release \
        procps \
+       python-pip \
+       python-setuptools \
        software-properties-common \
        zsh \
        2>&1 \
     # create user and install oh-my-zsh \
     && wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
+    && rm -rf /root/.oh_my_zsh \
     # Add repositories:
     #   Docker
     && curl -fsSL https://download.docker.com/linux/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/gpg | (OUT=$(apt-key add - 2>&1) || echo $OUT) \
@@ -36,6 +39,8 @@ RUN apt-get update \
     && apt-get update \
     # Install Docker CLI
     && apt-get install -y docker-ce-cli \
+    # Install AWS CLI
+    && pip install awscli \
     # Cleanup
     && apt-get autoremove -y \
     && apt-get clean -y \
