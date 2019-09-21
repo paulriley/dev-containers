@@ -6,8 +6,6 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-USER root
-
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils \
     && apt-get -y upgrade \
@@ -39,8 +37,12 @@ RUN apt-get update \
     && apt-get update \
     # Install Docker CLI
     && apt-get install -y docker-ce-cli \
+    # Install Docker Compose CLI
+    && pip install wheel \
+    && pip install docker-compose \
     # Install AWS CLI
     && pip install awscli \
+    && pip install awscli-local \
     # Cleanup
     && apt-get autoremove -y \
     && apt-get clean -y \
