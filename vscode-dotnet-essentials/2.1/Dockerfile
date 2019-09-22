@@ -40,9 +40,10 @@ RUN apt-get update \
     # Install Docker Compose CLI
     && pip install wheel \
     && pip install docker-compose \
-    # Install AWS CLI
+    # Install AWS CLI & Templates
     && pip install awscli \
     && pip install awscli-local \
+    && dotnet new -i Amazon.Lambda.Templates \
     # Cleanup
     && apt-get autoremove -y \
     && apt-get clean -y \
