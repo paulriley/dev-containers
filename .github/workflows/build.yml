@@ -11,6 +11,6 @@ jobs:
         run: |
           docker pull sittingonthedock/vscode-dotnet-essentials:3.0
     container:
-      image: sittingonthedock/build-docker:latest
+      image: sittingonthedock/build-docker:1.0
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
