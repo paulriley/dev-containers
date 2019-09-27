@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Pull existing image
         run: docker pull sittingonthedock/vscode-dotnet-essentials:3.0 || true
+      - name: Checkout
+        uses: actions/checkout@master
       - name: Build new image
         run: docker build -t sittingonthedock/vscode-dotnet-essentials:3.0 vscode-dotnet-essentials/3.0
     container:
