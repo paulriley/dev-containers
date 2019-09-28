@@ -12,7 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Build new image
-        run: docker build -t sittingonthedock/vscode-dotnet-essentials:3.0 vscode-dotnet-essentials/3.0
+        run: |
+          docker login -u {{ secret.DockerHubUser }} -p {{ secret.DockerHubPassword }}
+          docker build -t sittingonthedock/vscode-dotnet-essentials:3.0 vscode-dotnet-essentials/3.0
     container:
       image: sittingonthedock/build-docker:1.0
       volumes:
