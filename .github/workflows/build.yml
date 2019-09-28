@@ -18,6 +18,6 @@ jobs:
           docker login -u ${{ secrets.DockerHubUser }} -p ${{ secrets.DockerHubPassword }}
           docker push ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0
     container:
-      image: ${{ secrets.DockerHubUser }}/build-docker:1.0
+      image: sittingonthedock/build-docker:1.0
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
