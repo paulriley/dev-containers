@@ -16,7 +16,7 @@ jobs:
           docker build -t ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
             --cache-from ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
             vscode-dotnet-essentials/3.0
-      - name: Push built image
+      - name: Push built image to DockerHub
         run: |
           docker login -u ${{ secrets.DockerHubUser }} -p ${{ secrets.DockerHubPassword }}
           docker push ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0
