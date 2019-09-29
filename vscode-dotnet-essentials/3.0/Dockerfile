@@ -1,11 +1,8 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0
 
 ENV DEBIAN_FRONTEND=noninteractive
-# Or your actual UID, GID on Linux if not the default 1000
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
 
+# Or your actual UID, GID on Linux if not the default 1000
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils \
     && apt-get -y upgrade \
