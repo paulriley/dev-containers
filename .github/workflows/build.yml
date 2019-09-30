@@ -1,26 +1,37 @@
+name: Build all containers
 on:
   push:
     branches:
       - master
+      - test
 jobs:
-  push_changes:
-    name: "Push Changes"
+  vscode_dotnet_essentials_30:
+    name: "Update vscode-dotnet-essentials:3.0"
     runs-on: ubuntu-18.04
+    env:
+      package: vscode-dotnet-essentials:3.0
     steps:
-      - name: Pull existing image
-        run: docker pull ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 || true
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Build new image
-        run: |
-          docker build -t ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
-            --cache-from ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
-            vscode-dotnet-essentials/3.0
-      - name: Push built image to DockerHub
-        run: |
-          docker login -u ${{ secrets.DockerHubUser }} -p ${{ secrets.DockerHubPassword }}
-          docker push ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0
+    - uses: pull_existing
+    - uses: actions/checkout@master
+    - uses: build_new
+    - uses: push_built
     container:
       image: sittingonthedock/build-docker:1.0
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
+
+actions:
+  pull_existing:
+    name: Pull existing image
+    run: docker pull ${{ secrets.DockerHubUser }}/$package || true
+  build_new:
+    name: Build new image
+    run: |
+      docker build -t ${{ secrets.DockerHubUser }}/$package \
+        --cache-from ${{ secrets.DockerHubUser }}/$package \
+        $package/3.0
+  push_built:
+    name: Push built image to DockerHub
+    run: |
+      docker login -u ${{ secrets.DockerHubUser }} -p ${{ secrets.DockerHubPassword }}
+      docker push ${{ secrets.DockerHubUser }}/$package
