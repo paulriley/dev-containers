@@ -7,6 +7,7 @@ jobs:
     name: "Push Changes"
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/
       - name: Pull existing image
         run: docker pull ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 || true
       - name: Checkout
@@ -15,7 +16,7 @@ jobs:
         run: |
           docker build -t ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
             --cache-from ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
-            vscode-dotnet-essentials/3.0
+            -f vscode-dotnet-essentials/3.0/Dockerfile
       - name: Push built image to DockerHub
         run: |
           docker login -u ${{ secrets.DockerHubUser }} -p ${{ secrets.DockerHubPassword }}

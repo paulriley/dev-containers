@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.1
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ADD .post-create.sh /root
+
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils \
     && apt-get -y upgrade \
@@ -17,8 +19,9 @@ RUN apt-get update \
        iproute2 \
        lsb-release \
        procps \
-       python-pip \
-       python-setuptools \
+       python3-dev \
+       python3-pip \
+       python3-setuptools \
        software-properties-common \
        zsh \
        2>&1 \
@@ -34,11 +37,11 @@ RUN apt-get update \
     # Install Docker CLI
     && apt-get install -y docker-ce-cli \
     # Install Docker Compose CLI
-    && pip install wheel \
-    && pip install docker-compose \
+    && pip3 install wheel \
+    && pip3 install docker-compose \
     # Install AWS CLI & Templates
-    && pip install awscli \
-    && pip install awscli-local \
+    && pip3 install awscli \
+    && pip3 install awscli-local \
     && dotnet new -i Amazon.Lambda.Templates \
     # Cleanup
     && apt-get autoremove -y \

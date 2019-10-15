@@ -2,6 +2,8 @@ FROM buildpack-deps:buster-curl
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ADD .post-create.sh /root
+
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils \
     && apt-get -y upgrade \

@@ -1,0 +1,39 @@
+{
+	"name": "Dev Container - Docker Containers",
+	"image": "sittingonthedock/vscode-node-essentials:12",
+
+	// Use 'settings' to set *default* container specific settings.json values on container create. 
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/usr/bin/zsh",
+		"files.autoSave": "afterDelay"
+		},
+	
+	"runArgs": [
+		// Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
+		"-v", "/var/run/docker.sock:/var/run/docker.sock",
+		"-e", "CONTAINER_PREFIX=randomizer",
+		"-e", "AWS_ACCESS_KEY_ID=xyz",
+		"-e", "AWS_SECRET_ACCESS_KEY=123",
+		"-e", "AWS_DEFAULT_REGION=eu-west-1",
+		"-e", "AWS_DEFAULT_OUTPUT=json",
+		"-e", "LOCALSTACK_HOST=localstack",
+		"-e", "USE_SSL=true"
+
+		// // You may want to add a non-root user to your Dockerfile. On Linux, this will prevent
+		// // new files getting created as root. See https://aka.ms/vscode-remote/containers/non-root-user
+		// // for the needed Dockerfile updates and then uncomment the next line.
+		// "-u", "vscode"
+	],
+
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	"extensions": [
+		"aaron-bond.better-comments",
+		"formulahendry.docker-explorer",
+		"k--kato.docomment",
+		"mauve.terraform",
+		"mikestead.dotenv",
+		"ms-azuretools.vscode-docker",
+		"formulahendry.docker-explorer"
+	]
+}
