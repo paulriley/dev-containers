@@ -2,8 +2,6 @@ FROM buildpack-deps:buster-curl
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ADD .post-create.sh /root
-
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils \
     && apt-get -y upgrade \
@@ -25,5 +23,8 @@ RUN apt-get update \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
+
+ADD .post-create.sh /root
+ADD .zshrc /root
 
 ENV DEBIAN_FRONTEND=
