@@ -1,6 +1,6 @@
 {
 	"name": "Dev Container - Docker Containers",
-	"image": "sittingonthedock/vscode-node-essentials:12",
+	"image": "sittingonthedock/vscode-node-essentials:actions",
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
@@ -12,6 +12,8 @@
 	"runArgs": [
 		// Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
 		"-v", "/var/run/docker.sock:/var/run/docker.sock",
+		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
+		"-v", "${env:HOME}${env:USERPROFILE}/.zshrc-add-identities:/root/.zshrc-add-identities",
 		"-e", "CONTAINER_PREFIX=randomizer",
 		"-e", "AWS_ACCESS_KEY_ID=xyz",
 		"-e", "AWS_SECRET_ACCESS_KEY=123",
@@ -35,5 +37,7 @@
 		"mikestead.dotenv",
 		"ms-azuretools.vscode-docker",
 		"formulahendry.docker-explorer"
-	]
+	],
+	
+	"postCreateCommand": "~/.post-create.sh"
 }
