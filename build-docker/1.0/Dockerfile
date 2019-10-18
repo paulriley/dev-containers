@@ -24,7 +24,4 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-ADD .post-create.sh /root
-ADD .zshrc /root
-
 ENV DEBIAN_FRONTEND=
