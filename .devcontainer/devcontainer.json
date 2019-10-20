@@ -10,15 +10,12 @@
 		},
 	
 	"runArgs": [
-		// Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
+		// Use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
 		"-v", "/var/run/docker.sock:/var/run/docker.sock",
+		// Include local .ssh folder (copied by post-create.sh)
 		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
+		// Include local add identities hook (avoids need for ssh-add in each terminal)
 		"-v", "${env:HOME}${env:USERPROFILE}/.zsh-add-identities:/root/.zsh-add-identities"
-
-		// // You may want to add a non-root user to your Dockerfile. On Linux, this will prevent
-		// // new files getting created as root. See https://aka.ms/vscode-remote/containers/non-root-user
-		// // for the needed Dockerfile updates and then uncomment the next line.
-		// "-u", "vscode"
 	],
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
