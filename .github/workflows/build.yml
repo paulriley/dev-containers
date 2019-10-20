@@ -7,10 +7,12 @@ jobs:
     name: "Push Changes"
     runs-on: ubuntu-18.04
     steps:
-      - name: Pull existing image
-        run: docker pull ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 || true
       - name: Checkout
         uses: actions/checkout@master
+      - name: Pull existing image
+        uses: ./.github/actions/pull_image
+        with:
+          docker-hub-user: ${{ secrets.DockerHubUser }}
       - name: Build new image
         run: |
           docker build -t ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
