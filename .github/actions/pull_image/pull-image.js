@@ -4,9 +4,12 @@ const Docker = require('dockerode');
 try {
   const docker = new Docker({socketPath: '/var/run/docker.sock'});
   const dockerHubUser = core.getInput('docker-hub-user');
-  const image = await docker.pull(`${dockerHubUser}/vscode-dotnet-essentials:3.0`, processStream);
-  core.info(`Image pulled ${image.id}`);
-  core.setOutput(image.id);
+  docker.pull(`${dockerHubUser}/vscode-dotnet-essentials:3.0`, processStream)
+    .then(image => {
+      core.info(`Image pulled ${image.id}`);
+      core.setOutput(image.id);
+    })
+    .catch(err => core.setFailed(err.message));
 } catch (error) {
   core.setFailed(error.message);
 }
