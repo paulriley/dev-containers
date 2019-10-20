@@ -13,14 +13,7 @@
 		// Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
 		"-v", "/var/run/docker.sock:/var/run/docker.sock",
 		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
-		"-v", "${env:HOME}${env:USERPROFILE}/.zshrc-add-identities:/root/.zshrc-add-identities",
-		"-e", "CONTAINER_PREFIX=randomizer",
-		"-e", "AWS_ACCESS_KEY_ID=xyz",
-		"-e", "AWS_SECRET_ACCESS_KEY=123",
-		"-e", "AWS_DEFAULT_REGION=eu-west-1",
-		"-e", "AWS_DEFAULT_OUTPUT=json",
-		"-e", "LOCALSTACK_HOST=localstack",
-		"-e", "USE_SSL=true"
+		"-v", "${env:HOME}${env:USERPROFILE}/.zsh-add-identities:/root/.zsh-add-identities"
 
 		// // You may want to add a non-root user to your Dockerfile. On Linux, this will prevent
 		// // new files getting created as root. See https://aka.ms/vscode-remote/containers/non-root-user
