@@ -15,7 +15,8 @@ try {
 function pullImage(image, version) {
   const docker = new Docker({socketPath: '/var/run/docker.sock'});
   this.imageName = `${image}:${version}`;
-  log.debug(`=> Pulling ${this.imageName}`);
+  core.debug(`=> Pulling ${this.imageName}`);
+
   return new Promise((resolve, reject) => {
     docker.pull(this.imageName, (err, stream) => {
       if(err) return reject(err);
