@@ -5,10 +5,12 @@ try {
   const docker = new Docker({socketPath: '/var/run/docker.sock'});
   const dockerHubUser = core.getInput('docker-hub-user');
   const tag = `${dockerHubUser}/vscode-dotnet-essentials:3.0`;
-  docker.pull(tag, processStream);
-  const image = docker.getImage(tag);
-  core.info(`Image pulled ${image.id}`);
-  core.setOutput(image.id);
+  docker.pull(tag, processStream).then(result => {
+    core.info(result);
+    const image = docker.getImage(tag);
+    core.info(`Image pulled ${image.id}`);
+    core.setOutput(image.id);
+  });
 } catch (error) {
   core.setFailed(error.message);
 }
