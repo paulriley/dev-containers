@@ -7,7 +7,8 @@ try {
   const version = '3.0';
 
   pullImage(image, version)
-    .then(result => core.info(result));
+    .then(result => core.info(result))
+    .catch(result => core.error(result));
 } catch (error) {
   core.setFailed(error.message);
 }
@@ -21,7 +22,7 @@ function pullImage(image, version) {
     docker.pull(this.imageName, (err, stream) => {
       if(err) return reject(err);
       stream.on('data', logData);
-      stream.on('end', x => resolve(x));
+      stream.on('end', x => resolve(JSON.stringify(x)));
       stream.on('error', err => reject(err));
     });
   });
