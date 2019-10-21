@@ -15,7 +15,7 @@ function processStream(error, stream) {
   if (error) {
     core.error(err);
   } else {
-    stream.on(logData);
+    stream.on('data', logData);
     stream.on('error', err => core.setFailed(err));
   }
 }
