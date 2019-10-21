@@ -22,7 +22,7 @@ function pullImage(image, version) {
     docker.pull(this.imageName, (err, stream) => {
       if(err) return reject(err);
       stream.on('data', logData);
-      stream.on('end', x => resolve(docker.getImage(imageName)));
+      stream.on('end', x => resolve(docker.getImage(imageName).id));
       stream.on('error', err => reject(err));
     });
   });
