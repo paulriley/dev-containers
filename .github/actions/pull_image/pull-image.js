@@ -2,26 +2,28 @@ const core = require('@actions/core');
 const Docker = require('dockerode');
 
 try {
-  const docker = new Docker({socketPath: '/var/run/docker.sock'});
   const dockerHubUser = core.getInput('docker-hub-user');
-  const tag = `${dockerHubUser}/vscode-dotnet-essentials:3.0`;
-  docker.pull(tag, processStream).then(result => {
-    core.info(result);
-    const image = docker.getImage(tag);
-    core.info(`Image pulled ${image.id}`);
-    core.setOutput(image.id);
-  });
+  const image = `${dockerHubUser}/vscode-dotnet-essentials`;
+  const version = '3.0';
+
+  pullImage(image, version)
+    .then(result => core.info(result));
 } catch (error) {
   core.setFailed(error.message);
 }
 
-function processStream(error, stream) {
-  if (error) {
-    core.error(err);
-  } else {
-    stream.on('data', logData);
-    stream.on('error', err => core.setFailed(err));
-  }
+function pullImage(image, version) {
+  const docker = new Docker({socketPath: '/var/run/docker.sock'});
+  this.imageName = `${image}:${version}`;
+  log.debug(`=> Pulling ${this.imageName}`);
+  return new Promise((resolve, reject) => {
+    docker.pull(this.imageName, (err, stream) => {
+      if(err) return reject(err);
+      stream.on('data', logData);
+      stream.on('end', x => resolve(x));
+      stream.on('error', err => reject(err));
+    });
+  });
 }
 
 function logData(data) {
