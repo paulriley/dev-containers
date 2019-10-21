@@ -25,6 +25,6 @@ function logData(data) {
   if (progress.status === "Downloading" || progress.status === "Extracting") {
     core.debug(`${progress.status} ${progress.progress} ${progress.id}`);
   } else {
-    core.info(`${progress.status} ${progress.id}`);
+    core.info(`${progress.status} ${progress.id || ''}`);
   }
 }
