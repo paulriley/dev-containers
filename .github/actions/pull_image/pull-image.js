@@ -31,7 +31,13 @@ function pullImage(image, version) {
 
 function getImageInfo(docker, imageName, resolve) {
   return docker.getImage(imageName)
-    .inspect(info => resolve(info));
+    .inspect((err, info) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(info)
+        }
+    });
 }
 
 function logData(data) {
