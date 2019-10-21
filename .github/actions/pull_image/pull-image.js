@@ -3,12 +3,12 @@ const Docker = require('dockerode');
 
 try {
   const dockerHubUser = core.getInput('docker-hub-user');
-  const image = `${dockerHubUser}/vscode-dotnet-essentials`;
+  const imageName = `${dockerHubUser}/vscode-dotnet-essentials`;
   const version = '3.0';
 
-  pullImage(image, version)
-    .then(result => core.info(result))
-    .catch(result => core.error(result));
+  pullImage(imageName, version)
+    .then(image => core.info(JSON.stringify(image)))
+    .catch(err => core.error(err));
 } catch (error) {
   core.setFailed(error.message);
 }
@@ -22,7 +22,7 @@ function pullImage(image, version) {
     docker.pull(imageName, (err, stream) => {
       if(err) return reject(err);
       stream.on('data', logData);
-      stream.on('end', x => resolve(docker.getImage(imageName).id));
+      stream.on('end', () => resolve(docker.getImage(imageName)));
       stream.on('error', err => reject(err));
     });
   });
