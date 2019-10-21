@@ -15,6 +15,7 @@ try {
 
 function pullImage(image, version) {
   const docker = new Docker({socketPath: '/var/run/docker.sock'});
+  docker.modem
   const imageName = `${image}:${version}`;
   core.debug(`=> Pulling ${imageName}`);
 
@@ -22,10 +23,15 @@ function pullImage(image, version) {
     docker.pull(imageName, (err, stream) => {
       if(err) return reject(err);
       stream.on('data', logData);
-      stream.on('end', () => resolve(docker.getImage(imageName)));
+      stream.on('end', () => getImageInfo(docker, imageName, resolve));
       stream.on('error', err => reject(err));
     });
   });
+}
+
+function getImageInfo(docker, imageName, resolve) {
+  return docker.getImage(imageName)
+    .inspect(info => resolve(info));
 }
 
 function logData(data) {
