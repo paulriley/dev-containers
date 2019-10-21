@@ -15,7 +15,16 @@ function processStream(error, stream) {
   if (error) {
     core.error(err);
   } else {
-    stream.on('data', data => core.info(data));
+    stream.on(logData);
     stream.on('error', err => core.setFailed(err));
+  }
+}
+
+function logData(data) {
+  const progress = JSON.parse(data);
+  if (progress.status === "Downloading" || progress.status === "Extracting") {
+    core.debug(`${progress.status} ${progress.progress} ${progress.id}`);
+  } else {
+    core.info(`${progress.status} ${progress.id}`);
   }
 }
