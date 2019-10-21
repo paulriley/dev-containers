@@ -16,10 +16,10 @@ try {
 function pullImage(image, version) {
   const docker = new Docker({socketPath: '/var/run/docker.sock'});
   const imageName = `${image}:${version}`;
-  core.debug(`=> Pulling ${this.imageName}`);
+  core.debug(`=> Pulling ${imageName}`);
 
   return new Promise((resolve, reject) => {
-    docker.pull(this.imageName, (err, stream) => {
+    docker.pull(imageName, (err, stream) => {
       if(err) return reject(err);
       stream.on('data', logData);
       stream.on('end', x => resolve(docker.getImage(imageName).id));
