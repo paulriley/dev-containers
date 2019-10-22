@@ -7,7 +7,7 @@ try {
   const version = '3.0';
 
   pullImage(imageName, version)
-    .then(image => core.info(JSON.stringify(image)))
+    .then(image => core.info(JSON.parse(image.Id)))
     .catch(err => core.error(err));
 } catch (error) {
   core.setFailed(error.message);
