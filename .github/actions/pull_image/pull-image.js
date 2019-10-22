@@ -33,16 +33,16 @@ function getImageInfo(docker, imageName, resolve) {
   return docker.getImage(imageName)
     .inspect((err, info) => {
         if (err) {
-          reject(err)
+          reject(err);
         } else {
-          resolve(info)
+          resolve(info);
         }
     });
 }
 
 function logData(data) {
   const progress = JSON.parse(data);
-  if (progress.status === "Downloading" || progress.status === "Extracting") {
+  if (progress.status === 'Downloading' || progress.status === 'Extracting') {
     core.debug(`${progress.status} ${progress.progress} ${progress.id}`);
   } else {
     core.info(`${progress.status} ${progress.id || ''}`);
