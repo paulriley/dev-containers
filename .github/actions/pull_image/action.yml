@@ -1,0 +1,12 @@
+name: 'Show payload'
+description: 'Write the entire payload to the terminal'
+inputs:
+  docker-hub-user:
+    description: 'DockerHub User'
+    required: true
+outputs:
+  image:
+    description: 'The image pulled'
+runs:
+  using: 'node12'
+  main: 'pull-image.js'
