@@ -7,19 +7,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Pull existing image
-        uses: ./.github/actions/pull_image
+      - name: Publish Image 
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          docker-hub-user: ${{ secrets.DockerHubUser }}
-      - name: Build new image
-        run: |
-          docker build -t ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
-            --cache-from ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0 \
-            -f vscode-dotnet-essentials/3.0/Dockerfile .
-      - name: Push built image to DockerHub
-        run: |
-          docker login -u ${{ secrets.DockerHubUser }} -p ${{ secrets.DockerHubPassword }}
-          docker push ${{ secrets.DockerHubUser }}/vscode-dotnet-essentials:3.0
+          name: sittingonthedock/vscode-dotnet-essentials:2.1
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: vscode-dotnet-essentials/2.1/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
     container:
       image: sittingonthedock/build-docker:1.0
       volumes:
