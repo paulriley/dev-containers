@@ -1,6 +1,20 @@
 on: push
 
 jobs:
+  push_build_docker_1_0:
+    name: "Push Changes to build-docker:1.0"
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image build-docker:1.0
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sittingonthedock/build-docker:1.0
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: vscode-dotnet-essentials/2.1/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
   push_dotnet_2_1:
     name: "Push Changes to vscode-dotnet-essentials:2.1"
     runs-on: ubuntu-18.04
@@ -57,4 +71,34 @@ jobs:
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
           dockerfile: vscode-node-essentials/12/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
+  push_node_actions_js:
+    name: "Push Changes to vscode-node-essentials:actions-js"
+    runs-on: ubuntu-18.04
+    needs: push_node_12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image vscode-node-essentials:actions-js
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sittingonthedock/vscode-node-essentials:actions-js
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: vscode-node-essentials/actions-js/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
+  push_node_actions_ts:
+    name: "Push Changes to vscode-node-essentials:actions-ts"
+    runs-on: ubuntu-18.04
+    needs: push_node_12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image vscode-node-essentials:actions-ts
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sittingonthedock/vscode-node-essentials:actions-ts
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: vscode-node-essentials/actions-ts/Dockerfile
           cache: ${{ github.event_name != 'schedule' }}
