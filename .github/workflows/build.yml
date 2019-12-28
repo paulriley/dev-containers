@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
-        uses: actions/checkout@master            
+        uses: actions/checkout@master
       - name: Publish Image vscode-dotnet-essentials:2.1
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
-        uses: actions/checkout@master            
+        uses: actions/checkout@master
       - name: Publish Image vscode-dotnet-essentials:3.0
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
@@ -35,7 +35,7 @@ jobs:
     needs: push_dotnet_2_1
     steps:
       - name: Checkout
-        uses: actions/checkout@master            
+        uses: actions/checkout@master 
       - name: Publish Image vscode-dotnet-essentials:lambda
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
@@ -45,11 +45,11 @@ jobs:
           dockerfile: vscode-dotnet-essentials/lambda/Dockerfile
           cache: ${{ github.event_name != 'schedule' }}
   push_node_12:
-    name: "Push Changes to vscode-dotnet-essentials:lambda"
+    name: "Push Changes to vscode-node-essentials:12"
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
-        uses: actions/checkout@master            
+        uses: actions/checkout@master
       - name: Publish Image vscode-node-essentials:12
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
