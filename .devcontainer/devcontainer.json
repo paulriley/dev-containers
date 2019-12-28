@@ -13,9 +13,9 @@
 		// Use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
 		"-v", "/var/run/docker.sock:/var/run/docker.sock",
 		// Include local .ssh folder (copied by post-create.sh)
-		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
+		"-v", "${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
 		// Include local add identities hook (avoids need for ssh-add in each terminal)
-		"-v", "${env:HOME}${env:USERPROFILE}/.zsh-add-identities:/root/.zsh-add-identities"
+		"-v", "${env:USERPROFILE}/.zsh-add-identities:/root/.zsh-add-identities"
 	],
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
