@@ -58,7 +58,3 @@ jobs:
           password: ${{ secrets.DockerHubPassword }}
           dockerfile: vscode-node-essentials/12/Dockerfile
           cache: ${{ github.event_name != 'schedule' }}
-    container:
-      image: sittingonthedock/build-docker:1.0
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
