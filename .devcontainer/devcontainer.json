@@ -1,6 +1,6 @@
 {
 	"name": "Dev Container - Docker Containers",
-	"image": "sittingonthedock/vscode-node-essentials:actions",
+	"image": "sittingonthedock/vscode-node-essentials:actions-js",
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
