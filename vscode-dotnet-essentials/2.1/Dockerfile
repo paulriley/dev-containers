@@ -15,6 +15,7 @@ RUN apt-get update \
        git \
        gnupg-agent \
        iproute2 \
+       less \
        lsb-release \
        procps \
        python3-dev \
