@@ -8,14 +8,14 @@
 		"terminal.integrated.shell.linux": "/usr/bin/zsh",
 		"files.autoSave": "afterDelay"
 		},
-	
-	"runArgs": [
+
+	"mounts": [
 		// Use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
-		"-v", "/var/run/docker.sock:/var/run/docker.sock",
+		"type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock",
 		// Include local .ssh folder (copied by post-create.sh)
-		"-v", "${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
+		"type=bind,src=${env:USERPROFILE}/.ssh,dst=/root/.ssh-localhost,ro",
 		// Include local add identities hook (avoids need for ssh-add in each terminal)
-		"-v", "${env:USERPROFILE}/.zsh-add-identities:/root/.zsh-add-identities"
+		"type=bind,src=${env:USERPROFILE}/.zsh-add-identities,dst=/root/.zsh-add-identities,ro"
 	],
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
