@@ -58,6 +58,21 @@ jobs:
           password: ${{ secrets.DockerHubPassword }}
           dockerfile: vscode-dotnet-essentials/lambda/Dockerfile
           cache: ${{ github.event_name != 'schedule' }}
+  push_dotnet_ecs:
+    name: "Push Changes to vscode-dotnet-essentials:ecs"
+    runs-on: ubuntu-18.04
+    needs: push_dotnet_3_0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master 
+      - name: Publish Image vscode-dotnet-essentials:ecs
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sittingonthedock/vscode-dotnet-essentials:ecs
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: vscode-dotnet-essentials/ecs/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
   push_node_12:
     name: "Push Changes to vscode-node-essentials:12"
     runs-on: ubuntu-18.04
