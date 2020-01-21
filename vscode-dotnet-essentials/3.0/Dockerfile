@@ -15,6 +15,7 @@ RUN apt-get update \
        gcc \
        git \
        gnupg-agent \
+       groff \
        iproute2 \
        less \
        lsb-release \
@@ -22,6 +23,7 @@ RUN apt-get update \
        python3-pip \
        python3-setuptools \
        software-properties-common \
+       unzip \
        zsh \
        2>&1 \
     # create user and install oh-my-zsh \
@@ -41,6 +43,11 @@ RUN apt-get update \
     # Install AWS CLI & Templates
     && pip3 install awscli \
     && pip3 install awscli-local \
+    # Terraform
+    && wget https://releases.hashicorp.com/terraform/0.12.16/terraform_0.12.16_linux_amd64.zip \
+    && unzip terraform_0.12.16_linux_amd64.zip \
+    && mv terraform /usr/local/bin/ \
+    && rm -rf terraform* \
     # Cleanup
     && apt-get autoremove -y \
     && apt-get clean -y \
