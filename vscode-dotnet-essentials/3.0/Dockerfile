@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
 
