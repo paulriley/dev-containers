@@ -1,17 +1,26 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1-bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG en_GB.UTF-8 
+ENV LANGUAGE en_GB:en
+ENV LC_ALL en_GB.UTF-8
 
-# Or your actual UID, GID on Linux if not the default 1000
 RUN apt-get update \
-    && apt-get -y install --no-install-recommends apt-utils \
+    && apt-get -y install --no-install-recommends apt-utils locales \
     && apt-get -y upgrade \
+    # locales - must match ENV variables at the top of this script
+    && echo "locales locales/default_environment_locale select en_GB.UTF-8" | debconf-set-selections \
+    && echo "locales locales/locales_to_be_generated multiselect en_GB.UTF-8 UTF-8" | debconf-set-selections \
+    && rm "/etc/locale.gen" \
+    && dpkg-reconfigure locales \
+    # Essentials
     && apt-get -y install --no-install-recommends \
        apt-transport-https \
        apt-utils \
        ca-certificates \
        curl \
        dialog \
+       dnsutils \
        gcc \
        git \
        gnupg-agent \
@@ -19,6 +28,8 @@ RUN apt-get update \
        iproute2 \
        less \
        lsb-release \
+       man-db \
+       net-tools \
        procps \
        python3-pip \
        python3-setuptools \
@@ -44,8 +55,8 @@ RUN apt-get update \
     && pip3 install awscli \
     && pip3 install awscli-local \
     # Terraform
-    && wget https://releases.hashicorp.com/terraform/0.12.16/terraform_0.12.16_linux_amd64.zip \
-    && unzip terraform_0.12.16_linux_amd64.zip \
+    && wget https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip \
+    && unzip terraform_0.12.21_linux_amd64.zip \
     && mv terraform /usr/local/bin/ \
     && rm -rf terraform* \
     # Cleanup

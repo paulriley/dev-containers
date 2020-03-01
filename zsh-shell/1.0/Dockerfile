@@ -1,4 +1,4 @@
-FROM node:12
+FROM buildpack-deps:bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -55,13 +55,18 @@ RUN apt-get update \
     # Install AWS CLI & Templates
     && pip3 install awscli \
     && pip3 install awscli-local \
+    # Terraform
+    && wget https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip \
+    && unzip terraform_0.12.21_linux_amd64.zip \
+    && mv terraform /usr/local/bin/ \
+    && rm -rf terraform* \
     # Cleanup
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-ADD .post-create.sh /root
-ADD .zshrc /root
+ADD .post-create.sh /root/
+ADD .zshrc /root/
 
 ENV DEBIAN_FRONTEND=
 

@@ -16,7 +16,7 @@
 		// Include local .ssh folder (copied by post-create.sh)
 		"type=bind,src=${env:USERPROFILE}/.ssh,dst=/root/.ssh-localhost,ro",
 		// Include local add identities hook (avoids need for ssh-add in each terminal)
-		"type=bind,src=${env:USERPROFILE}/.zsh-add-identities,dst=/root/.zsh-add-identities,ro"
+		"type=bind,src=${env:USERPROFILE}/.zsh-hooks,dst=/root/.zsh-hooks,ro"
 	],
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
