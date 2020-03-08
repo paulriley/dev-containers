@@ -42,7 +42,7 @@ jobs:
           name: sittingonthedock/build-docker:1.0
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
-          dockerfile: vscode-dotnet-essentials/2.1/Dockerfile
+          dockerfile: build-docker/1.0
           cache: ${{ github.event_name != 'schedule' }}
   push_dotnet_2_1:
     name: "Push Changes to vscode-dotnet-essentials:2.1"
