@@ -18,6 +18,7 @@ jobs:
   push_aws_tools_bionic:
     name: "Push Changes to aws-tools:bionic"
     runs-on: ubuntu-18.04
+    needs: push_zsh_shell_bionic
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -46,6 +47,7 @@ jobs:
   push_dotnet_2_1:
     name: "Push Changes to vscode-dotnet-essentials:2.1"
     runs-on: ubuntu-18.04
+    needs: push_aws_tools_bionic
     steps:
       - name: Checkout
         uses: actions/checkout@master
