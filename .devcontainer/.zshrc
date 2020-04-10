@@ -1,7 +1,7 @@
 export ZSH="/root/.oh-my-zsh"
 
 ZSH_THEME="af-magic"
-plugins=(git vscode ssh-agent aws docker)
+plugins=(gitfast vscode ssh-agent aws docker)
 
 if [ -f ~/.zsh-hooks ]
 then
