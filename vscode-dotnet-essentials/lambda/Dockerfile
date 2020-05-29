@@ -1,4 +1,4 @@
-FROM sittingonthedock/vscode-dotnet-essentials:2.1
+FROM sittingonthedock/vscode-dotnet-essentials:3.1
 
 RUN dotnet new -i Amazon.Lambda.Templates
 

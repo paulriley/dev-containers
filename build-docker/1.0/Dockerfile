@@ -17,6 +17,7 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends \
        apt-utils \
        lsb-release \
+       software-properties-common \
        2>&1 \
     # # Add repositories:
     #   Docker

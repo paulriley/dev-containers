@@ -1,6 +1,35 @@
 on: push
 
 jobs:
+  push_zsh_shell_bionic:
+    name: "Push Changes to zsh-shell:bionic"
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image zsh-shell:bionic
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sittingonthedock/zsh-shell:bionic
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: zsh-shell/bionic/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
+  push_aws_tools_bionic:
+    name: "Push Changes to aws-tools:bionic"
+    runs-on: ubuntu-18.04
+    needs: push_zsh_shell_bionic
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image aws-tools:bionic
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sittingonthedock/aws-tools:bionic
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          dockerfile: aws-tools/bionic/Dockerfile
+          cache: ${{ github.event_name != 'schedule' }}
   push_build_docker_1_0:
     name: "Push Changes to build-docker:1.0"
     runs-on: ubuntu-18.04
@@ -13,11 +42,12 @@ jobs:
           name: sittingonthedock/build-docker:1.0
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
-          dockerfile: vscode-dotnet-essentials/2.1/Dockerfile
+          dockerfile: build-docker/1.0/Dockerfile
           cache: ${{ github.event_name != 'schedule' }}
   push_dotnet_2_1:
     name: "Push Changes to vscode-dotnet-essentials:2.1"
     runs-on: ubuntu-18.04
+    needs: push_aws_tools_bionic
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -28,20 +58,6 @@ jobs:
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
           dockerfile: vscode-dotnet-essentials/2.1/Dockerfile
-          cache: ${{ github.event_name != 'schedule' }}
-  push_dotnet_3_0:
-    name: "Push Changes to vscode-dotnet-essentials:2.1"
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Publish Image vscode-dotnet-essentials:3.0
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: sittingonthedock/vscode-dotnet-essentials:3.0
-          username: ${{ secrets.DockerHubUser }}
-          password: ${{ secrets.DockerHubPassword }}
-          dockerfile: vscode-dotnet-essentials/3.0/Dockerfile
           cache: ${{ github.event_name != 'schedule' }}
   push_dotnet_3_1:
     name: "Push Changes to vscode-dotnet-essentials:3.1"
@@ -60,7 +76,7 @@ jobs:
   push_dotnet_lambda:
     name: "Push Changes to vscode-dotnet-essentials:lambda"
     runs-on: ubuntu-18.04
-    needs: push_dotnet_2_1
+    needs: push_dotnet_3_1
     steps:
       - name: Checkout
         uses: actions/checkout@master 
@@ -75,7 +91,7 @@ jobs:
   push_dotnet_ecs:
     name: "Push Changes to vscode-dotnet-essentials:ecs"
     runs-on: ubuntu-18.04
-    needs: push_dotnet_3_0
+    needs: push_dotnet_3_1
     steps:
       - name: Checkout
         uses: actions/checkout@master 
