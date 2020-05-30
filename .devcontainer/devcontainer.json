@@ -1,22 +1,32 @@
 {
 	"name": "Dev Container - Docker Containers",
 	"dockerFile": "Dockerfile",
-	"context": "..",
+	"containerUser": "developer",
+	
+	"build" : {
+		"args": {
+			"USERNAME": "developer"
+		}
+	},
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
-	"settings": { 
+	"settings": {
 		"terminal.integrated.shell.linux": "/usr/bin/zsh",
-		"files.autoSave": "afterDelay"
+		"files.autoSave": "afterDelay",
+		"terraform.indexing": {
+			"enabled": false
 		},
+		"terraform.languageServer": {
+			"enabled": true,
+			"installCommonProviders": false,
+			"pathToBinary": "/usr/share/terraform/lsp"
+		}
+	},
 
 	"mounts": [
 		// Use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
-		"type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock",
-		// Include local .ssh folder (copied by post-create.sh)
-		"type=bind,src=${env:USERPROFILE}/.ssh,dst=/root/.ssh-localhost,ro",
-		// Include local add identities hook (avoids need for ssh-add in each terminal)
-		"type=bind,src=${env:USERPROFILE}/.zsh-hooks,dst=/root/.zsh-hooks,ro"
+		"type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock"
 	],
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
