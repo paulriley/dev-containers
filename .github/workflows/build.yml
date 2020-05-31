@@ -3,18 +3,18 @@ on: push
 jobs:
   push_container_updates:
     name: "Push Changes to ${{ matrix.image.name }}:${{ matrix.image.tag }}"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - name: Publish Image ${{ matrix.image.name }}:${{ matrix.image.tag }}
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: docker/build-push-action@v1
         with:
-          name: sittingonthedock/${{ matrix.image.name }}:${{ matrix.image.tag }}
+          repository: sittingonthedock/${{ matrix.image.name }}
+          tags: ${{ matrix.image.tag }}
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
-          dockerfile: ${{ matrix.image.name }}/${{ matrix.image.tag }}/Dockerfile
-          cache: ${{ github.event_name != 'schedule' }}
+          path: ${{ matrix.image.name }}/${{ matrix.image.tag }}
     strategy:
       matrix:
         image:
