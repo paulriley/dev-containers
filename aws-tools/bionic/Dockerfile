@@ -1,10 +1,31 @@
-FROM sittingonthedock/zsh-shell:bionic
+FROM buildpack-deps:bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
-    && apt-get -y upgrade \
-    # locales - must match ENV variables at the top of this script
+RUN apt-get -y update \
+    && apt-get -y install --no-install-recommends \
+       apt-transport-https \
+       apt-utils \
+       ca-certificates \
+       curl \
+       dialog \
+       dnsutils \
+       gcc \
+       git \
+       gnupg-agent \
+       groff \
+       iproute2 \
+       less \
+       lsb-release \
+       man-db \
+       net-tools \
+       procps \
+       python3-pip \
+       python3-setuptools \
+       software-properties-common \
+       unzip \
+       zsh \
+       2>&1 \
     # Add repositories:
     #   Docker
     && curl -fsSL https://download.docker.com/linux/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/gpg | (OUT=$(apt-key add - 2>&1) || echo $OUT) \
@@ -28,9 +49,6 @@ RUN apt-get update \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
-
-ADD .post-create.sh /root/
-ADD .zshrc /root/
 
 ENV DEBIAN_FRONTEND=
 
