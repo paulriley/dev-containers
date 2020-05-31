@@ -18,8 +18,6 @@ jobs:
     strategy:
       matrix:
         image:
-          - name: "zsh-shell"
-            tag: "bionic"
           - name: "aws-tools"
             tag: "bionic"
           - name: "build-docker"
