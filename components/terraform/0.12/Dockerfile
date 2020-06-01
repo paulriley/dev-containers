@@ -1,4 +1,4 @@
-FROM sittingonthedock/unpacker:1.0
+FROM sittingonthedock/vscode-components-unpacker:1.0
 
 ARG UNPACK_FOLDER="/tmp/extract/terraform"
 
