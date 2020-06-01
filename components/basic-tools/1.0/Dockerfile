@@ -1,12 +1,13 @@
 FROM buildpack-deps:focal-curl AS basics
 
-ARG USERNAME
+ARG USERNAME=developer
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        # zsh/docker/git requirements
         apt-transport-https \
         apt-utils \
         dialog \
@@ -38,3 +39,5 @@ RUN apt-get update \
     && usermod -a -G sudo ${USERNAME} \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
+
+ENV DEBIAN_FRONTEND=
