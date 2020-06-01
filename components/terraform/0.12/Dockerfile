@@ -1,4 +1,4 @@
-FROM buildpack-deps:focal-curl AS basics
+FROM sittingonthedock/unpacker:1.0
 
 ARG UNPACK_FOLDER="/tmp/extract/terraform"
 
