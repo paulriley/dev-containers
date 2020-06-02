@@ -1,5 +1,7 @@
 FROM sittingonthedock/vscode-components-basic-tools:1.0
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         # .NET Core requirements
@@ -28,3 +30,5 @@ RUN pip3 install wheel \
     && ln -s /usr/share/terraform/bin/terraform /usr/bin/terraform \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     && dotnet new -i Amazon.Lambda.Templates
+
+ENV DEBIAN_FRONTEND=
