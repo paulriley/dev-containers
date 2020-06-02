@@ -9,7 +9,11 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
         g++ \
         make \
         nodejs \
-        npm \
+        2>&1 \
+    # Cleanup, to keep interim container small
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
     && npm install -g \
         typescript
 
