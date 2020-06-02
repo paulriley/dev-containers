@@ -1,38 +1,67 @@
 on: push
 
 jobs:
-  push_container_updates:
-    name: "Push Changes to ${{ matrix.image.name }}:${{ matrix.image.tag }}"
+  push_unpacker:
+    name: "Push Changes to vscode-components-unpacker"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Publish Image ${{ matrix.image.name }}:${{ matrix.image.tag }}
+      - name: Publish Image sittingonthedock/vscode-components-unpacker:1.0
         uses: docker/build-push-action@v1
         with:
-          repository: sittingonthedock/${{ matrix.image.name }}
-          tags: ${{ matrix.image.tag }}
+          repository: sittingonthedock/vscode-components-unpacker
+          tags: 1.0,latest
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
-          path: ${{ matrix.image.name }}/${{ matrix.image.tag }}
+          path: components/unpacker/1.0
+  push_components:
+    name: "Push Changes to ${{ matrix.image.name }}:${{ matrix.image.tag }}"
+    runs-on: ubuntu-latest
+    needs: push_unpacker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image sittingonthedock/vscode-components-${{ matrix.image.name }}:${{ matrix.image.tag }}
+        uses: docker/build-push-action@v1
+        with:
+          repository: sittingonthedock/vscode-components-${{ matrix.image.name }}
+          tags: ${{ matrix.image.tag }},latest
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          path: components/${{ matrix.image.name }}/${{ matrix.image.tag }}
     strategy:
       matrix:
         image:
-          - name: "aws-tools"
-            tag: "bionic"
-          - name: "build-docker"
+          - name: "basic-tools"
             tag: "1.0"
-          - name: "vscode-dotnet-essentials"
-            tag: "2.1"
-          - name: "vscode-dotnet-essentials"
+          - name: "dotnet-extract"
             tag: "3.1"
-          - name: "vscode-dotnet-essentials"
+          - name: "terraform-extract"
+            tag: "0.12"
+  push_container_updates:
+    name: "Push Changes to sittingonthedock/vscode-containers-${{ matrix.image.name }}:${{ matrix.image.tag }}"
+    runs-on: ubuntu-latest
+    needs: push_components
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Publish Image sittingonthedock/vscode-components-${{ matrix.image.name }}:${{ matrix.image.tag }}
+        uses: docker/build-push-action@v1
+        with:
+          repository: sittingonthedock/vscode-containers-${{ matrix.image.name }}
+          tags: ${{ matrix.image.tag }}
+          username: ${{ secrets.DockerHubUser }}
+          password: ${{ secrets.DockerHubPassword }}
+          path: containers/${{ matrix.image.name }}/${{ matrix.image.tag }}
+    strategy:
+      matrix:
+        image:
+          - name: "dotnet"
             tag: "lambda"
-          - name: "vscode-dotnet-essentials"
+          - name: "dotnet"
             tag: "ecs"
-          - name: "vscode-node-essentials"
-            tag: "12"
-          - name: "vscode-node-essentials"
+          - name: "node"
             tag: "actions-js"
-          - name: "vscode-node-essentials"
+          - name: "node"
             tag: "actions-ts"
