@@ -2,7 +2,7 @@ on: push
 
 jobs:
   push_unpacker:
-    name: "Push Changes to vscode-components-unpacker"
+    name: "Push vscode-components-unpacker"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.DockerHubPassword }}
           path: components/unpacker/1.0
   push_components:
-    name: "Push Changes to ${{ matrix.image.name }}:${{ matrix.image.tag }}"
+    name: "Push vscode-components-${{ matrix.image.name }}"
     runs-on: ubuntu-latest
     needs: push_unpacker
     steps:
@@ -40,7 +40,7 @@ jobs:
           - name: "terraform-extract"
             tag: "0.12"
   push_container_updates:
-    name: "Push Changes to sittingonthedock/vscode-containers-${{ matrix.image.name }}:${{ matrix.image.tag }}"
+    name: "Push vscode-containers-${{ matrix.image.name }}"
     runs-on: ubuntu-latest
     needs: push_components
     steps:
