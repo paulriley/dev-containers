@@ -1,4 +1,4 @@
-FROM sittingonthedock/vscode-components-basic-tools
+FROM sittingonthedock/vscode-components-basic-tools:1.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 

@@ -1,4 +1,4 @@
-FROM sittingonthedock/vscode-components-basic-tools
+FROM sittingonthedock/vscode-components-basic-tools:1.0
 
 COPY --from=sittingonthedock/vscode-components-dotnet-extract /tmp/extract/dotnet /usr/share/dotnet
 COPY --from=sittingonthedock/vscode-components-terraform-extract /tmp/extract/terraform /usr/share/terraform 

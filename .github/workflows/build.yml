@@ -11,7 +11,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: sittingonthedock/vscode-components-unpacker
-          tags: "1.0"
+          tags: 1.0,latest
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
           path: components/unpacker/1.0
@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: sittingonthedock/vscode-components-${{ matrix.image.name }}
-          tags: ${{ matrix.image.tag }}
+          tags: ${{ matrix.image.tag }},latest
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
           path: components/${{ matrix.image.name }}/${{ matrix.image.tag }}
@@ -46,11 +46,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Publish Image ${{ matrix.image.name }}:${{ matrix.image.tag }}
+      - name: Publish Image sittingonthedock/vscode-components-${{ matrix.image.name }}:${{ matrix.image.tag }}
         uses: docker/build-push-action@v1
         with:
           repository: sittingonthedock/vscode-containers-${{ matrix.image.name }}
-          tags: ${{ matrix.image.tag }}
+          tags: ${{ matrix.image.tag }},latest
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
           path: containers/${{ matrix.image.name }}/${{ matrix.image.tag }}
