@@ -1,7 +1,7 @@
 on: push
 
 jobs:
-  push_unzip:
+  push_unpacker:
     name: "Push Changes to vscode-components-unpacker"
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +18,7 @@ jobs:
   push_components:
     name: "Push Changes to ${{ matrix.image.name }}:${{ matrix.image.tag }}"
     runs-on: ubuntu-latest
-    needs: push_unzip
+    needs: push_unpacker
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -37,7 +37,7 @@ jobs:
             tag: "1.0"
           - name: "dotnet-extract"
             tag: "3.1"
-          - name: "terraform"
+          - name: "terraform-extract"
             tag: "0.12"
   push_container_updates:
     name: "Push Changes to sittingonthedock/vscode-containers-${{ matrix.image.name }}:${{ matrix.image.tag }}"
