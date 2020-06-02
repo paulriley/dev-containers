@@ -50,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: sittingonthedock/vscode-containers-${{ matrix.image.name }}
-          tags: ${{ matrix.image.tag }},latest
+          tags: ${{ matrix.image.tag }}
           username: ${{ secrets.DockerHubUser }}
           password: ${{ secrets.DockerHubPassword }}
           path: containers/${{ matrix.image.name }}/${{ matrix.image.tag }}
@@ -59,9 +59,9 @@ jobs:
         image:
           - name: "dotnet"
             tag: "lambda"
-          - name: "vscode-dotnet-essentials"
+          - name: "dotnet"
             tag: "ecs"
-          - name: "vscode-node-essentials"
+          - name: "node"
             tag: "actions-js"
-          - name: "vscode-node-essentials"
+          - name: "node"
             tag: "actions-ts"
