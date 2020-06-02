@@ -44,5 +44,5 @@
 		"ms-azuretools.vscode-docker"
 	],
 	
-	"postCreateCommand": "~/.post-create.sh"
+	"postCreateCommand": "sudo chown -R developer /var/run/docker.sock"
 }
