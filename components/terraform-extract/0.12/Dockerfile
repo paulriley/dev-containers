@@ -12,4 +12,4 @@ RUN TERRAFORM_VERSION=0.12.26 \
     && unzip terraform-provider-aws_${TERRAFORM_AWS_PROVIDER_VERSION}_linux_amd64.zip -d ${UNPACK_FOLDER}/lsp \
     && echo "provider \"aws\" {}" >> ${UNPACK_FOLDER}/lsp/providers.tf \
     && wget -c https://releases.hashicorp.com/terraform-ls/${TERRAFORM_LSP_VERSION}/terraform-ls_${TERRAFORM_LSP_VERSION}_linux_amd64.zip \
-    && unzip terraform-provider-aws_${TERRAFORM_LSP_VERSION}_linux_amd64.zip -d ${UNPACK_FOLDER}/lsp
+    && unzip terraform-ls_${TERRAFORM_LSP_VERSION}_linux_amd64.zip -d ${UNPACK_FOLDER}/lsp
