@@ -28,6 +28,7 @@ RUN apt-get update \
        procps \
        python3-pip \
        python3-setuptools \
+       openssh-client \
        software-properties-common \
        sudo \
        unzip \
