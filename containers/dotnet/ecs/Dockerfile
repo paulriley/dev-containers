@@ -22,7 +22,6 @@ RUN pip3 install wheel \
     && pip3 install awscli \
     && pip3 install awscli-local \
     && ln -s /usr/share/terraform/bin/terraform /usr/bin/terraform \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     && dotnet help
 
 ENV DEBIAN_FRONTEND=
